@@ -1,100 +1,71 @@
-Experiment:
+# skill-assesment1
 
-18.Write an assembly language program in 8051 to search for a given number in an array of N elements and display whether the number is found or not found.
+Write an assembly language program in 8051 to search for a given number in an array of N elements and display whether the number is found or not found.
 
-Aim:
+Aim
 
-To write an assembly language program to search a given number in an array of numbers stored in memory using 8051 microcontroller and to display the result through Port 1.
+To write an assembly language program in 8051 to search for a given number in an array and store the result in memory.
 
-If the number is found → P1 = FFH
+Algorithm
 
-If not found → P1 = 00H
+Start the program at address 0000H.
 
+Load the starting address of the array (30H) into R0.
 
+Load the array size (number of elements) into R1.
 
----
+Load the number to be searched (07H).
 
-Algorithm:
+Compare each element in the array with the given number.
 
-1. Start the program.
+If a match is found → store 0FFH in address 40H (means FOUND).
 
+If no match after checking all elements → store 00H in address 40H (means NOT FOUND).
 
-2. Initialize the data pointer register R0 with the starting address of the array (30H).
+Stop the program.
 
-
-3. Load R1 with the total number of elements in the array.
-
-
-4. Load the accumulator (A) with the number to be searched (NUM).
-
-
-5. Clear the carry flag (used as “found” flag).
-
-
-6. Compare each array element with the number to be searched:
-
-If equal → set carry flag and jump to the end.
-
-If not equal → increment R0 to point to the next element.
-
-
-
-7. Repeat steps until all elements are checked.
-
-
-8. If carry flag is set → output FFH on Port 1 (found).
-
-
-9. If carry flag is not set → output 00H on Port 1 (not found).
-
-
-10. Stop the program.
-
-Program:
+PROGRAM:
 ```
-ORG 0H   
-MOV R0, #30H      ; Start address of array
-MOV R1, #N        ; Number of elements
-MOV A, #NUM       ; Number to search
-CLR C             ; Clear carry (flag)
+ORG 0000H
 
-SEARCH:
-    MOV A, @R0    
-    CJNE A, #NUM, NEXT  
-    SETB C         
-    SJMP END_SEARCH
+ARRAY_ADDR     EQU 30H      
+ARRAY_SIZE     EQU 08H       
+NUMBER_TO_FIND EQU 07H   
+RESULT_ADDR    EQU 40H     
 
+MAIN:
+    MOV R0, #ARRAY_ADDR     
+    MOV R1, #ARRAY_SIZE      
+
+SEARCH_LOOP:
+    MOV A, @R0               
+    CJNE A, #NUMBER_TO_FIND, NEXT  
+
+    MOV A, #0FFH             
+    MOV 40H, A            
+    SJMP DONE                
 NEXT:
-    INC R0         
-    DJNZ R1, SEARCH 
+    INC R0                  
+    DJNZ R1, SEARCH_LOOP     
 
-END_SEARCH:
-    JNC NOT_FOUND  
 
-FOUND:
-    MOV P1, #0FFH  
-    SJMP $          
+    MOV A, #00H              
+    MOV 40H, A
 
-NOT_FOUND:
-    MOV P1, #00H   
-    SJMP $          
-
-ARRAY: DB 11,22,33,44,55  
-N EQU 5                    
-NUM EQU 77                 
+DONE:
+    SJMP $
 
 END
-
-
 ```
+output:
 
-Output:
-<img width="929" height="594" alt="Screenshot 2025-10-25 071351" src="https://github.com/user-attachments/assets/ac1f01eb-bcfb-44ce-9613-cd32cdcb77dc" />
+<img width="1037" height="758" alt="Screenshot 2025-10-25 161600" src="https://github.com/user-attachments/assets/8e100df4-ea23-46b6-9a65-c4631b82b29e" />
 
 Result:
 
-The program was executed successfully in Keil software.
+The assembly language program was executed successfully.
+When the number 07H was searched in the given array
+(01H, 02H, 03H, 04H, 05H, 06H, 07H, 08H),
 
-Since the number 77 is not found in the array,
-Port 1 output = 00H
-(P1 = 0x00) → Number not found.# skill-assesment1
+the result stored at memory location 40H = FFH,
+which indicates that the number is FOUND in the array. 
