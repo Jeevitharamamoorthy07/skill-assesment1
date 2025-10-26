@@ -2,9 +2,11 @@
 
 Write an assembly language program in 8051 to search for a given number in an array of N elements and display whether the number is found or not found.
 
+
 Aim
 
 To write an assembly language program in 8051 to search for a given number in an array and store the result in memory.
+
 
 Algorithm
 
@@ -23,6 +25,7 @@ If a match is found → store 0FFH in address 40H (means FOUND).
 If no match after checking all elements → store 00H in address 40H (means NOT FOUND).
 
 Stop the program.
+
 
 PROGRAM:
 ```
@@ -58,9 +61,11 @@ DONE:
 END
 ```
 
+
 output:
 
-<img width="1037" height="758" alt="Screenshot 2025-10-25 161600" src="https://github.com/user-attachments/assets/8e100df4-ea23-46b6-9a65-c4631b82b29e" />
+<img width="547" height="400" alt="Screenshot 2025-10-25 161600" src="https://github.com/user-attachments/assets/5b5dd621-54a6-4f9c-8e91-c3fbb4f39369" />
+
 
 
 
